@@ -17,6 +17,7 @@ namespace Rpg
 
         public List<GameObject> turns=new List<GameObject>();
 
+        //thread safe padlock
         private void Awake()
         {
             instance = this;
@@ -27,6 +28,7 @@ namespace Rpg
         {
             InitializeCombat();
         }
+
         void InitializeCombat()
         {
             Enemy enemy;
@@ -41,6 +43,9 @@ namespace Rpg
                 turns.Add(enemy.gameObject);
             }
 
+
+            BubbleSort(turns);
+
             ///arreglo o lista auxiliar 
             /// bubble sort
             for (int i = 0; i < turns.Count; i++)
@@ -52,6 +57,31 @@ namespace Rpg
             }
 
         }
+
+        void BubbleSort(List<GameObject> gameObjects)
+        {
+             
+
+            for (int i = 0; i < gameObjects.Count; i++)
+            {
+                for (int j = 0; j < gameObjects.Count-1; j++)
+                {
+
+                    if(gameObjects[j].GetComponent<IGetData>()?.GetCharacterData().speed <gameObjects[j+1].GetComponent<IGetData>()?.GetCharacterData().speed)
+                    {
+                        GameObject tmpObj = gameObjects[j + 1];
+                        gameObjects[j + 1] = gameObjects[j];
+                        gameObjects[j] = tmpObj;
+
+                    }
+
+                }
+            }
+
+
+        }
+
+
 
     }
 
