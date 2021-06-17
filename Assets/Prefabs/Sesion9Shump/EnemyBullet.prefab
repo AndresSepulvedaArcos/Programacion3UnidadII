@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Initialspeed: 2
+  frequency: 0.28
+  amplitude: 2.49
 --- !u!50 &4638987809579939786
 Rigidbody2D:
   serializedVersion: 4

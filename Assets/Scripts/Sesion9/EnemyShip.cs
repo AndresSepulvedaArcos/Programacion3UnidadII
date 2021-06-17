@@ -13,7 +13,7 @@ namespace Shmup
         // Start is called before the first frame update
         void Start()
         {
-            StartCoroutine(ShootCircle());
+            StartCoroutine(ShootSinusoidal());
         }
 
         IEnumerator ShootForward()
@@ -29,8 +29,47 @@ namespace Shmup
             }
 
         }
+        IEnumerator ShootSinusoidal()
+        {
 
-       
+            Vector2 ShootDir = transform.up;
+
+            GameObject bullet;
+           
+            while (true)
+            {
+                bullet = EnemyBulletPool.Instance.GetPooledObject(transform.position);
+                bullet.GetComponent<EnemyBullet>().ShootTo(transform.up,true);
+
+               
+
+                yield return new WaitForSeconds(fireRate);
+
+            }
+
+        }
+        IEnumerator ShootSpiral()
+        {
+
+            Vector2 ShootDir = transform.up;
+
+            GameObject bullet;
+            int i=0;
+            while (true)
+            {
+                   bullet = EnemyBulletPool.Instance.GetPooledObject(transform.position);
+                    bullet.GetComponent<EnemyBullet>().ShootTo(Rotate2D(transform.up, Mathf.Deg2Rad * 360 / circleBulletAmmount * i));
+
+                i++;
+
+                if (i > circleBulletAmmount)
+                    i = 0;
+
+                yield return new WaitForSeconds(fireRate);
+
+            }
+
+        }
         IEnumerator ShootCircle()
         {
 
